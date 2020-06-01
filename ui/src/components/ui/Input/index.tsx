@@ -12,7 +12,7 @@ type PropTypes = {
   onKeyPress?: (event: KeyboardEvent<HTMLInputElement>) => void
   onPaste?: (event: ClipboardEvent<HTMLInputElement>) => void
   value?: string
-  type?: 'text' | 'number' | 'password'
+  type?: 'text' | 'number' | 'password' | 'username'
   step?: string
   autoFocus?: boolean
 }

@@ -52,8 +52,8 @@ export const addUserOrders = (orders: OrderType[]): ActionType<OrderType[]> => (
   payload: orders,
 });
 
-export const login = (password: string) => async (dispatch: Dispatch): Promise<Response> => {
-  const resp = await post('/auth/login', { username: 'dex-demo', password });
+export const login = (username: string, password: string) => async (dispatch: Dispatch): Promise<Response> => {
+  const resp = await post('/auth/login', { username, password });
 
   if (resp.status === 204) {
     const addrRes = await get('/auth/me');

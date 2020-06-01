@@ -171,7 +171,13 @@ class OrderForm extends Component<Props, State> {
 
     if (!baseAsset || !quoteAsset) return;
 
-    this.setState({ isPlacingBid: true });
+    this.setState({ isPlacingBid: false });
+    this.setState({
+      isPlacingBid: false,
+      bidAmount: '',
+      bidPrice: '',
+      bidTotal: '',
+    });
 
     try {
       const resp = await this.props.placeOrder({
@@ -224,7 +230,13 @@ class OrderForm extends Component<Props, State> {
 
     if (!baseAsset || !quoteAsset) return;
 
-    this.setState({ isPlacingAsk: true });
+    this.setState({ isPlacingAsk: false });
+    this.setState({
+      isPlacingAsk: false,
+      askAmount: '',
+      askPrice: '',
+      askTotal: '',
+    });
 
     try {
       const resp = await this.props.placeOrder({
@@ -254,12 +266,6 @@ class OrderForm extends Component<Props, State> {
         throw new Error('See console for error');
       }
 
-      this.setState({
-        isPlacingAsk: false,
-        askAmount: '',
-        askPrice: '',
-        askTotal: '',
-      });
     } catch (e) {
       console.log(e);
       this.setState({

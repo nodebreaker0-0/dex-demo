@@ -20,6 +20,8 @@ import { ActionType } from "../../ducks/types";
 import { REDUX_STATE } from "../../ducks";
 import './main.scss';
 import {Spinner} from "../../components/ui/LoadingIndicator";
+import CreateWallet from '../CreateWallet';
+import ConnectWallet from '../ConnectWallet';
 
 type StateProps = {
   isLoggedIn?: boolean
@@ -64,7 +66,11 @@ class Main extends Component<PropsType> {
       <div className="app__content">
         <Switch>
           <Route path={CONNECT_WALLET__SOFTWARE} component={Login} exact />
+          <Route path={CREATE_WALLET__SOFTWARE} component={CreateWallet} exact />
+          <Route path={CONNECT_WALLET} component={ConnectWallet} exact />
+          <Route path={EXCHANGE} component={Exchange} exact />
           <Redirect to={CONNECT_WALLET__SOFTWARE} />
+
         </Switch>
       </div>
     );
@@ -91,7 +97,7 @@ function mapStateToProps(state: REDUX_STATE): StateProps {
 
 function mapDispatchToProps(dispatch: ThunkDispatch<REDUX_STATE, any, ActionType<any>>): DispatchProps {
   return {
-    login: () => dispatch(login('password')),
+    login: () => dispatch(login('username','password')),
     checkLogin: () => dispatch(checkLogin()),
   };
 }

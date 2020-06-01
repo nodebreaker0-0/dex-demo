@@ -57,9 +57,9 @@ function handleFetchBook(getState: () => REDUX_STATE, action: ActionType<any>, d
       dispatch(setOpenBidsByMarketId(json.bids, selectedMarket));
       dispatch(setOpenAsksByMarketId(json.asks, selectedMarket));
 
-      watchDepthTimeout = setTimeout(getDepth, 500);
+      watchDepthTimeout = setTimeout(getDepth, 300);
     } catch (e) {
-      watchDepthTimeout = setTimeout(getDepth, 500);
+      watchDepthTimeout = setTimeout(getDepth, 300);
     }
 
   }
@@ -78,7 +78,7 @@ function handleBatch(getState: () => REDUX_STATE, action: ActionType<any>, dispa
     if (selectedMarket) {
       dispatch(fetchBatchByMarketId(selectedMarket));
     }
-    watchBatchTimeout = setTimeout(getBatch, 2000);
+    watchBatchTimeout = setTimeout(getBatch, 500);
   }
 }
 
@@ -89,7 +89,7 @@ function handleOrderHistory(getState: () => REDUX_STATE, action: ActionType<any>
 
   async function getOrderHistory() {
     await dispatch(fetchUserOrders());
-    watchOrderHistoryTimeout = setTimeout(getOrderHistory, 2000);
+    watchOrderHistoryTimeout = setTimeout(getOrderHistory, 500);
   }
 }
 
@@ -100,6 +100,6 @@ function handleBalance(getState: () => REDUX_STATE, action: ActionType<any>, dis
 
   async function getDaily() {
     await dispatch(fetchBalance());
-    watchBalanceTimeout = setTimeout(getDaily, 2000);
+    watchBalanceTimeout = setTimeout(getDaily, 500);
   }
 }

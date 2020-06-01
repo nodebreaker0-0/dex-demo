@@ -43,12 +43,12 @@ func loginHandler() http.HandlerFunc {
 			return
 		}
 
-		if req.Username != AccountName {
+		if loginid_find(req.Username) {
 			http.Error(w, "Invalid username or password.", http.StatusUnauthorized)
 			return
 		}
 
-		kbID, hotPW, err := authorize(req.Password)
+		kbID, hotPW, err := authorize(req.Username, req.Password)
 		if err != nil {
 			http.Error(w, "Invalid username or password.", http.StatusUnauthorized)
 			return
@@ -111,17 +111,32 @@ func meHandler(ctx context.CLIContext, cdc *codec.Codec) http.HandlerFunc {
 	}
 }
 
-func authorize(passphrase string) (string, string, error) {
+func authorize(username string, passphrase string) (string, string, error) {
 	kb, err := keys.NewKeyBaseFromHomeFlag()
 	if err != nil {
 		return "", "", err
 	}
 
-	pk, err := kb.ExportPrivateKeyObject(AccountName, passphrase)
+	pk, err := kb.ExportPrivateKeyObject(username, passphrase)
 	if err != nil {
 		return "", "", err
 	}
 
 	hotPassphrase := ReadStr32()
-	return ReplaceKB(AccountName, hotPassphrase, pk), hotPassphrase, nil
+	return ReplaceKB(username, hotPassphrase, pk), hotPassphrase, nil
+}
+
+func loginid_find(username string) bool {
+	kb, err := keys.NewKeyBaseFromHomeFlag()
+	if err != nil {
+		return true
+	}
+	info, err := kb.Get(username)
+	if err != nil {
+		return true
+	}
+	if info != nil {
+		return false
+	}
+	return false
 }

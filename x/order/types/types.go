@@ -13,7 +13,7 @@ const (
 	StoreKey   = ModuleName
 )
 
-const MaxTimeInForce = 600
+const MaxTimeInForce = 50000
 
 type Order struct {
 	ID                store.EntityID     `json:"id"`
